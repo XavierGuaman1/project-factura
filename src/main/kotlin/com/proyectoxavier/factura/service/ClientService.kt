@@ -1,7 +1,7 @@
-package com.proyectoleslie.factura.service
+package com.proyectoxavier.factura.service
 
-import com.proyectoleslie.factura.model.Client
-import com.proyectoleslie.factura.repository.ClientRepository
+import com.proyectoxavier.factura.model.Client
+import com.proyectoxavier.factura.repository.ClientRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -27,7 +27,7 @@ class ClientService {
         }
     }
 
-    fun update(client: Client): Client{
+    fun update(client: Client): Client {
         try {
             clientRepository.findById(client.id)
                 ?: throw Exception("ID no existe")
@@ -39,7 +39,7 @@ class ClientService {
         }
     }
 
-    fun updateName(client: Client): Client{
+    fun updateName(client: Client): Client {
         try{
             val response = clientRepository.findById(client.id)
                 ?: throw Exception("ID no existe")
@@ -65,7 +65,7 @@ class ClientService {
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
-    fun listById (id:Long?):Client?{
+    fun listById (id:Long?): Client?{
         return clientRepository.findById(id)
     }
 

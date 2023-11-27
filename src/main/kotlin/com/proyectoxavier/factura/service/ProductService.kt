@@ -1,7 +1,7 @@
-package com.proyectoleslie.factura.service
+package com.proyectoxavier.factura.service
 
-import com.proyectoleslie.factura.model.Product
-import com.proyectoleslie.factura.repository.ProductRepository
+import com.proyectoxavier.factura.model.Product
+import com.proyectoxavier.factura.repository.ProductRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -27,7 +27,7 @@ class ProductService {
         }
     }
 
-    fun update(product: Product): Product{
+    fun update(product: Product): Product {
         try {
             productRepository.findById(product.id)
                 ?: throw Exception("ID no existe")
@@ -39,7 +39,7 @@ class ProductService {
         }
     }
 
-    fun updateName(product: Product): Product{
+    fun updateName(product: Product): Product {
         try{
             val response = productRepository.findById(product.id)
                 ?: throw Exception("ID no existe")
@@ -65,7 +65,7 @@ class ProductService {
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
-    fun listById (id:Long?):Product?{
+    fun listById (id:Long?): Product?{
         return productRepository.findById(id)
     }
 

@@ -1,6 +1,6 @@
-package com.proyectoleslie.factura.repository
+package com.proyectoxavier.factura.repository
 
-import com.proyectoleslie.factura.model.Detail
+import com.proyectoxavier.factura.model.Detail
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 

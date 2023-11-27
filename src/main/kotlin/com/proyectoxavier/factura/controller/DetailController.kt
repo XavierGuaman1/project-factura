@@ -1,7 +1,7 @@
-package com.proyectoleslie.factura.controller
+package com.proyectoxavier.factura.controller
 
-import com.proyectoleslie.factura.model.Detail
-import com.proyectoleslie.factura.service.DetailService
+import com.proyectoxavier.factura.model.Detail
+import com.proyectoxavier.factura.service.DetailService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
