@@ -19,6 +19,10 @@ class InvoiceService {
         return invoiceRepository.findAll()
     }
 
+    fun listTotalMoreThan(value:Double?): List<Invoice>? {
+        return invoiceRepository.findTotalMoreThan(value)
+    }
+
     fun save(invoice: Invoice): Invoice {
         try {
             clientRepository.findById(invoice.clientId)

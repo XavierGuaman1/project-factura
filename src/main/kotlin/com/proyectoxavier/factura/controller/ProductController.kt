@@ -3,6 +3,7 @@ package com.proyectoxavier.factura.controller
 import com.proyectoxavier.factura.model.Product
 import com.proyectoxavier.factura.service.ProductService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -15,9 +16,12 @@ class ProductController {
     lateinit var productService: ProductService
 
     @GetMapping
-    fun list ():List <Product>{
-        return productService.list()
+    fun list (product: Product, pageable: Pageable):ResponseEntity<*>{
+        val response= productService.list(pageable,product)
+        return ResponseEntity(response, HttpStatus.OK)
     }
+
+//@RequestParam searchValue:String
 
     @PostMapping
     fun save (@RequestBody product: Product): ResponseEntity<Product> {
@@ -44,4 +48,6 @@ class ProductController {
         return ResponseEntity(productService.listById (id), HttpStatus.OK)
 
     }
+
+//@RequestParam searchValue:String
 }
