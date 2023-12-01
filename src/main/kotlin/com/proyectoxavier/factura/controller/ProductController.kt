@@ -1,5 +1,6 @@
 package com.proyectoxavier.factura.controller
 
+import com.proyectoxavier.factura.dto.ProductDto
 import com.proyectoxavier.factura.model.Product
 import com.proyectoxavier.factura.service.ProductService
 import org.springframework.beans.factory.annotation.Autowired
@@ -47,6 +48,11 @@ class ProductController {
     fun listById (@PathVariable("id") id: Long): ResponseEntity<*> {
         return ResponseEntity(productService.listById (id), HttpStatus.OK)
 
+    }
+
+    @GetMapping("/product-projection")
+    fun listDto(): List<ProductDto> {
+        return productService.listDto()
     }
 
 //@RequestParam searchValue:String

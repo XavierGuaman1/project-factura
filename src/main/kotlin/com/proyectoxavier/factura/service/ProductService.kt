@@ -1,5 +1,7 @@
 package com.proyectoxavier.factura.service
 
+import com.proyectoxavier.factura.dto.ProductDto
+import com.proyectoxavier.factura.mapper.ProductMapper
 import com.proyectoxavier.factura.model.Product
 import com.proyectoxavier.factura.repository.ProductRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -21,6 +23,19 @@ class ProductService {
             .withIgnoreNullValues()
             .withMatcher(("field"), ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
         return productRepository.findAll(Example.of(product, matcher), pageable)
+    }
+    //mutable list
+    fun listDto(): List<ProductDto> {
+        val productList = productRepository.findAll()
+
+        val productDtoList: MutableList<ProductDto> = mutableListOf()
+
+        for (product in productList) {
+            val productDto = ProductMapper.mapToDto(product)
+            productDtoList.add(productDto)
+        }
+
+        return productDtoList
     }
 
     fun save(product: Product): Product {
@@ -75,5 +90,6 @@ class ProductService {
     fun listById (id:Long?): Product?{
         return productRepository.findById(id)
     }
+
 
 }
