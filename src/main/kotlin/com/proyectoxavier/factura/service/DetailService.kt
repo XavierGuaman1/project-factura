@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 
+
 @Service
 class DetailService {
     @Autowired
@@ -24,7 +25,7 @@ class DetailService {
 
     fun save(detail: Detail):Detail{
         try {
-            // Verification logic for invoice and product existence
+
             detail.invoiceId?.let { invoiceId ->
                 if (!invoiceRepository.existsById(invoiceId)) {
                     throw ResponseStatusException(HttpStatus.NOT_FOUND, "Invoice not found for id: $invoiceId")
@@ -35,40 +36,40 @@ class DetailService {
                 if (!productRepository.existsById(productId)) {
                     throw ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found for id: $productId")
                 }
-            }//codigo hecho por mi.
+            }
             val response = detailRepository.save(detail)
-            //logica disminuir detail
+
             val product = productRepository.findById(detail.productId)
             product?.apply{
                 stok = stok?.minus(detail.quantity!!)
             }
             productRepository.save(product!!)
 
-            //productos que se multipliquen y muestre en total
+
             val listDetail = detailRepository.findByInvoiceId(detail.invoiceId)
 
             if (listDetail != null) {
-                var suma = 0
+                var suma = 0.0
 
                 listDetail.forEach { element ->
-                    suma += ((element.price ?: 0L) * (element.quantity ?: 0L)).toInt()
-                    // Multiplico y agrego a la suma
+                    suma += ((element.price ?: 0L).toInt() * (element.quantity ?: 0L).toInt())
                 }
+
                 val invoiceToUp = invoiceRepository.findById(detail.invoiceId)
                 invoiceToUp?.apply {
                     total = suma.toDouble()
                 }
                 invoiceRepository.save(invoiceToUp!!)
             }
-            // Save the detail
+
             return detailRepository.save(detail)
 
         } catch (ex: Exception) {
-            // Handle exceptions by wrapping them in a ResponseStatusException
-            throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error processing the request", ex)
-            }
 
+            throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error processing the request", ex)
         }
+
+    }
 
     fun update(detail: Detail): Detail {
         try {
@@ -90,9 +91,8 @@ class DetailService {
             return detailRepository.save(existingDetail)
         } catch (ex: Exception) {
             throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al actualizar el detalle", ex)
-            }
         }
-
+    }
     fun updateName(detail: Detail): Detail{
         try{
             val response = detailRepository.findById(detail.id)
@@ -123,10 +123,9 @@ class DetailService {
             return true // Puedes ajustar el tipo de retorno según tus necesidades
         } catch (ex: Exception) {
             throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al eliminar el detalle", ex)
-            }
+        }
     }
     fun listById (id:Long?): Detail?{
         return detailRepository.findById(id)
-        }
-
+    }
 }

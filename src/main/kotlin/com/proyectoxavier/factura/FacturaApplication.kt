@@ -9,3 +9,4 @@ class FacturaApplication
 fun main(args: Array<String>) {
 	runApplication<FacturaApplication>(*args)
 }
+
